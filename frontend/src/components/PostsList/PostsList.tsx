@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import mockPosts from "../../data/post.json";
 import mockTags from "../../data/tag.json";
 
@@ -9,33 +10,41 @@ interface Post {
   tags: number[];
 }
 
+// Added Tag interface for proper typing
 interface Tag {
   id: number;
   name: string;
 }
 
 const PostsList: React.FC = () => {
+  // Function to get tag names from tag IDs
+  const getTagNames = (tagIds: number[]): string[] => {
+    return tagIds.map(
+      (id) => mockTags.find((tag: Tag) => tag.id === id)?.name || ""
+    );
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <hr className="w-full w-[90vw] md:max-w-lg lg:max-w-xl xl:max-w-3xl my-2 border-t border-[#2D2D2D] px-4 " />
+      <hr className="w-full w-[90vw] md:max-w-lg lg:max-w-xl xl:max-w-3xl my-2 border-t border-[#2D2D2D] px-4" />
       {mockPosts.map((post: Post) => (
         <div
           key={post.id}
           className="w-full w-[90vw] md:max-w-lg lg:max-w-xl xl:max-w-3xl my-6 md:px-4"
         >
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold">
+          <Link
+            to={`/post/${post.id}`}
+            className="text-lg sm:text-xl md:text-2xl font-bold"
+          >
             {post.title}
-          </h2>
+          </Link>
           <p className="mt-2">{post.content}</p>
           <ul className="flex flex-wrap mt-2">
-            {post.tags.map((tagId: number) => {
-              const tag = mockTags.find((t: Tag) => t.id === tagId);
-              return (
-                <li key={tagId} className="mr-2 text-blue-500">
-                  {tag?.name}
-                </li>
-              );
-            })}
+            {getTagNames(post.tags).map((name, index) => (
+              <li key={index} className="mr-2 text-blue-500">
+                {name}
+              </li>
+            ))}
           </ul>
         </div>
       ))}
