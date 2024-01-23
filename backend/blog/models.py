@@ -6,13 +6,12 @@ from django.template.defaultfilters import slugify
 import nltk
 import uuid
 
-def generate_slug(title):
-    nltk.download('punkt')
+from .utils import generate_slug
 
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug = models.SlugField(max_length=200, unique=True, blank=True)
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
     content = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag', related_name='posts')
@@ -20,13 +19,13 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:  # Check if slug is empty
+            self.slug = generate_slug(self.title)  # Generate slug
+        super(Post, self).save(*args, **kwargs)  # Save the Post instance
+
     def __str__(self):
         return self.title
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
     
 class Tag(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
