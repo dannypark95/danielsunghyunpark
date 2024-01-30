@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../utils/api";
-import { AuthContext } from "../../contexts/AuthContext";
+import { api } from "../../../utils/api";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const AdminLogin: React.FC = () => {
   const [username, setUsername] = useState("");

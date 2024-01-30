@@ -8,6 +8,12 @@ def generate_slug(title):
     # Initialize the translator
     trans = googletrans.Translator()
 
+    if title == '':
+        raise Exception('Title is Empty')
+    
+    if title is None:
+        raise Exception('Title is Null')
+
     # Detect language
     lang = detect(title)
 
@@ -25,6 +31,6 @@ def generate_slug(title):
     # Filter tokens to remove stopwords, non-alphanumeric characters, and lowercase them
     tokens = [slugify(token.lower()) for token in tokens if token.isalnum() and token.lower() not in stop_words]
 
-
     # return slug
     return ('-').join(tokens)
+

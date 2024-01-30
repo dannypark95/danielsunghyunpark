@@ -3,10 +3,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-import nltk
 import uuid
 
-from .utils import generate_slug
+from .slug import generate_slug
 
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -18,11 +17,6 @@ class Post(models.Model):
     project = models.ForeignKey('Project', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:  # Check if slug is empty
-            self.slug = generate_slug(self.title)  # Generate slug
-        super(Post, self).save(*args, **kwargs)  # Save the Post instance
 
     def __str__(self):
         return self.title

@@ -6,9 +6,9 @@ import Footer from "./components/Footer/Footer";
 import Home from "./views/Home";
 import About from "./views/About";
 import PostPage from "./views/PostPage";
-import AdminLogin from "./components/Admin/AdminLogin";
-import AdminDashboard from "./components/Admin/AdminDashboard";
-import AdminPostEditor from "./components/Admin/AdminPostEditor";
+import AdminLogin from "./components/Admin/Login/AdminLogin";
+import AdminDashboard from "./components/Admin/Dashboard/AdminDashboard";
+import AdminPost from "./components/Admin/Post/AdminPost";
 import NotFound from "./views/NotFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -30,11 +30,12 @@ const Main: React.FC = () => {
           }
         />
         <Route
-          path="/admin/post-editor"
+          path="/test"
           element={
-            <ProtectedRoute>
-              <AdminPostEditor />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            //   <AdminPost />
+            // </ProtectedRoute>
+            <AdminPost />
           }
         />
         <Route path="*" element={<NotFound />} />

@@ -5,7 +5,8 @@
     "content": "## My Journey with React\n\nIn this post, I share my experiences and learnings from working with React. I started learning React about two years ago, initially overwhelmed by JSX, components, state, and props. As I dove deeper, I began to appreciate its power and flexibility.\n\n### Key Concepts I Learned\n- **JSX**: JSX is a syntax extension for JavaScript, resembling HTML but with JavaScript's power. It transformed how I built UI components.\n- **Components**: Learning to build small, reusable components made my development process more efficient.\n- **State Management**: Understanding state and props was crucial in managing data flow within my applications.\n\nReact has significantly influenced my approach to web development, making it more efficient and enjoyable.",
     "created_at": "2024-01-01",
     "project": 0,
-    "tags": [1, 2]
+    "tags": [1, 2],
+    "slug": "hello"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "content": "Django has been my go-to for backend development. Here's why...",
     "created_at": "2024-01-15",
     "project": 0,
-    "tags": [2, 3]
+    "tags": [2, 3],
+    "slug": "hello2"
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "content": "Kubernetes is a powerful tool for container orchestration. This post covers the basics...",
     "created_at": "2023-02-05",
     "project": 0,
-    "tags": [3]
+    "tags": [3],
+    "slug": "hello3"
   },
   {
     "id": 4,
@@ -30,7 +33,8 @@
     "content": "In this post, I share the journey of creating GomBakery...",
     "created_at": "2024-01-01",
     "project": 1,
-    "tags": [1, 3]
+    "tags": [1, 3],
+    "slug": "hell4"
   },
   {
     "id": 5,
@@ -39,6 +43,7 @@
     "content": "Web development is constantly evolving, and here's what I think...",
     "created_at": "2024-01-15",
     "project": 2,
-    "tags": [2, 4]
+    "tags": [2, 4],
+    "slug": "hello5"
   }
 ]

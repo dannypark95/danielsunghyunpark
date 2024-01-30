@@ -9,8 +9,8 @@ import PostContent from "../components/PostPage/PostContent";
 import CommentsSection from "../components/PostPage/CommentsSection";
 
 const PostPage: React.FC = () => {
-  const { postId } = useParams<{ postId: string }>();
-  const post = mockPosts.find((p) => p.id.toString() === postId);
+  const { slug } = useParams<{ slug: string }>();
+  const post = mockPosts.find((p) => p.slug.toString() === slug);
 
   if (!post) {
     return <div>Post not found</div>;

@@ -3,13 +3,6 @@ import { Link } from "react-router-dom";
 import mockPosts from "../../data/post.json";
 import mockTags from "../../data/tag.json";
 
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-  tags: number[];
-}
-
 // Added Tag interface for proper typing
 interface Tag {
   id: number;
@@ -27,13 +20,13 @@ const PostsList: React.FC = () => {
   return (
     <div className="flex flex-col items-center">
       <hr className="w-full w-[90vw] md:max-w-lg lg:max-w-xl xl:max-w-3xl my-2 border-t border-[#2D2D2D] px-4" />
-      {mockPosts.map((post: Post) => (
+      {mockPosts.map((post: any) => (
         <div
-          key={post.id}
+          key={post.slug}
           className="w-full w-[90vw] md:max-w-lg lg:max-w-xl xl:max-w-3xl my-6 md:px-4"
         >
           <Link
-            to={`/post/${post.id}`}
+            to={`/post/${post.slug}`}
             className="text-lg sm:text-xl md:text-2xl font-bold"
           >
             {post.title}
