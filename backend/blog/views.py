@@ -42,7 +42,7 @@ class LoginView(APIView):
 @csrf_exempt
 def slugify_title(request):
     if request.method == 'POST':
-        data = json.loads(request.body)  # Parse JSON data from request body
+        data = json.loads(request.body)
         title = data.get('title', '')
         try:
             slug = generate_slug(title)

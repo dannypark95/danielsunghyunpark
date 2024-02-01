@@ -33,7 +33,7 @@ const AdminPost: React.FC = () => {
           <TitleInput
             initialTitle={title}
             onTitleChange={setTitle}
-            onSlugChange={handleSlugChange}
+            onURLChange={handleSlugChange}
           />
           <TagsInput tags={tags} setTags={setTags} loadTags={loadOptions} />
           <ProjectsInput
@@ -41,6 +41,7 @@ const AdminPost: React.FC = () => {
             setProject={setProject}
             loadProjects={loadOptions}
           />
+          <hr></hr>
           <ContentEditor setContent={setContent} />
           <div className="flex justify-end gap-4">
             {/* TODO: 
