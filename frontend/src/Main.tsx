@@ -30,12 +30,11 @@ const Main: React.FC = () => {
           }
         />
         <Route
-          path="/test"
+          path="/admin/post"
           element={
-            // <ProtectedRoute>
-            //   <AdminPost />
-            // </ProtectedRoute>
-            <AdminPost />
+            <ProtectedRoute>
+              <AdminPost />
+            </ProtectedRoute>
           }
         />
         <Route path="*" element={<NotFound />} />

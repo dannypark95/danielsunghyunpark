@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../../utils/api";
+import api from "../../../utils/api"; //
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const AdminLogin: React.FC = () => {
@@ -12,14 +12,14 @@ const AdminLogin: React.FC = () => {
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await api.post("/login/", { username, password });
+      const response = await api.login(username, password); // Use the login function from api
       if (response.status === 200) {
-        login(); // Update isAuthenticated state
-        navigate("/admin/dashboard"); // Use navigate to redirect
+        login(); // Update isAuthenticated state, assuming login updates relevant auth context or state
+        navigate("/admin/dashboard"); // Redirect to the dashboard
       }
     } catch (error) {
       console.error("Login error", error);
-      // Handle login error (show message to user, etc.)
+      // Handle login error (e.g., show an error message)
     }
   };
 

@@ -1,38 +1,76 @@
-import React from "react";
-// import Select, { ActionMeta, MultiValue } from "react-select/async";
+import React, { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
+import api from "../../../utils/api";
 
-interface TagsInputProps {
-  tags: string[];
-  setTags: (tags: string[]) => void;
-  loadTags: (inputValue: string) => Promise<any>;
+interface TagOption {
+  value: string;
+  label: string;
 }
 
-const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, loadTags }) => {
-  //   const tagOptions = tags.map((tag) => ({ label: tag, value: tag }));
+interface TagsInputProps {
+  tags: TagOption[];
+  setTags: (tags: TagOption[]) => void;
+}
 
-  //   const handleChange = (
-  //     newValue: MultiValue<{ label: string; value: string }>,
-  //     actionMeta: ActionMeta<{ label: string; value: string }>
-  //   ) => {
-  //     if (
-  //       actionMeta.action === "remove-value" ||
-  //       actionMeta.action === "pop-value"
-  //     ) {
-  //       setTags(newValue.map((option) => option.value));
-  //     } else if (actionMeta.action === "select-option" && actionMeta.option) {
-  //       setTags([...tags, actionMeta.option.value]);
-  //     }
-  //   };
+const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags }) => {
+  const [options, setOptions] = useState<TagOption[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const loadTags = async () => {
+      try {
+        const fetchedTags = await api.fetchTags();
+        const tagOptions: TagOption[] = fetchedTags.map((tag: any) => ({
+          value: tag.id.toString(),
+          label: tag.name,
+        }));
+        setOptions(tagOptions);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+
+    loadTags();
+  }, []);
+
+  const handleChange = (selectedOptions: any) => {
+    const newTags: TagOption[] = selectedOptions
+      ? selectedOptions.map((option: any) => ({
+          value: option.value,
+          label: option.label,
+        }))
+      : [];
+    setTags(newTags);
+  };
+
+  const handleCreate = (inputValue: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      const newOption = {
+        label: inputValue,
+        value: inputValue,
+      };
+      setIsLoading(false);
+      setTags([...tags, newOption]);
+    }, 1000);
+  };
 
   return (
-    <div className="mb-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2">Tags</label>
-      {/* <Select
-        isMulti
-        loadOptions={loadTags}
-        onChange={handleChange}
-        value={tagOptions}
-      /> */}
+    <div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Tags
+        </label>
+        <CreatableSelect
+          isMulti
+          options={options}
+          onChange={handleChange}
+          onCreateOption={handleCreate}
+          isLoading={isLoading}
+          isDisabled={isLoading}
+          value={tags}
+        />
+      </div>
     </div>
   );
 };

@@ -24,3 +24,5 @@ declare module "*.json" {
 }
 
 declare module "@editorjs/list";
+
+declare module "uuid";

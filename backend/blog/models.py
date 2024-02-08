@@ -10,13 +10,13 @@ from .slug import generate_slug
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=250, unique=True, blank=True)
-    content = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    slug = models.CharField(max_length=100)
+    content = models.JSONField()
     tags = models.ManyToManyField('Tag', related_name='posts')
     project = models.ForeignKey('Project', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=50, default='draft')
 
     def __str__(self):
         return self.title

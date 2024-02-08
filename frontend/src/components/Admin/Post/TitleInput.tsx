@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { api } from "../../../utils/api";
+import api from "../../../utils/api";
 import debounce from "lodash/debounce";
 
 interface TitleInputProps {
@@ -7,7 +7,6 @@ interface TitleInputProps {
   initialSlug?: string;
   initialURL?: string;
   onTitleChange: (title: string) => void;
-  //   onSlugChange: (slug: string) => void;
   onURLChange: (url: string) => void;
 }
 
@@ -24,8 +23,7 @@ const TitleInput: React.FC<TitleInputProps> = ({
 
   const generateSlug = debounce(async (title: string) => {
     try {
-      const response = await api.post("/slugify/", { title });
-      const generatedSlug = response.data.slug;
+      const generatedSlug = await api.generateSlugFromTitle(title);
       setSlug(generatedSlug);
     } catch (error) {
       console.error("Error generating slug:", error);

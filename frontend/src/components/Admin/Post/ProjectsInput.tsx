@@ -1,36 +1,58 @@
-import React from "react";
-import Select from "react-select/async";
-import { SingleValue } from "react-select";
+import React, { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
+import api from "../../../utils/api";
 
-interface ProjectsInputProps {
-  project: string;
-  setProject: (project: string) => void;
-  loadProjects: (inputValue: string) => Promise<any>;
+interface ProjectOption {
+  value: string;
+  label: string;
 }
 
-const ProjectsInput: React.FC<ProjectsInputProps> = ({
+interface ProjectInputProps {
+  project: ProjectOption | null;
+  setProject: (project: ProjectOption | null) => void;
+}
+
+const ProjectsInput: React.FC<ProjectInputProps> = ({
   project,
   setProject,
-  loadProjects,
 }) => {
-  const handleChange = (
-    newValue: SingleValue<{ label: string; value: string }>
-  ) => {
-    setProject(newValue ? newValue.value : ""); // Update the project state with the value
+  const [options, setOptions] = useState<ProjectOption[]>([]);
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const fetchedProjects = await api.fetchProjects();
+        const projectOptions: ProjectOption[] = fetchedProjects.map(
+          (project: any) => ({
+            value: project.id.toString(),
+            label: project.name,
+          })
+        );
+        setOptions(projectOptions);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+
+    loadProjects();
+  }, []);
+
+  const handleChange = (selectedOption: ProjectOption | null) => {
+    setProject(selectedOption);
   };
 
   return (
-    <div className="mb-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2">
-        Project
-      </label>
-      <Select
-        cacheOptions
-        defaultOptions
-        loadOptions={loadProjects}
-        onChange={handleChange}
-        value={{ label: project, value: project }}
-      />
+    <div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Project
+        </label>
+        <CreatableSelect
+          options={options}
+          onChange={handleChange}
+          value={project ? [project] : []}
+        />
+      </div>
     </div>
   );
 };
