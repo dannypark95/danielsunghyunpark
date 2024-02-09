@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../utils/api"; //
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -8,6 +8,15 @@ const AdminLogin: React.FC = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      // Assuming your API sets authorization headers globally
+      // Update accordingly if your setup differs
+      navigate("/admin/dashboard"); // Redirect to dashboard
+    }
+  }, [navigate]);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

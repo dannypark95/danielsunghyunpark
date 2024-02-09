@@ -14,7 +14,7 @@ const Profile: React.FC = () => {
           className="absolute h-full w-full object-cover transform scale-150" // Zoom and scale effect applied here
         />
       </div>
-      <h1 className="text-xl font-semibold mt-2 py-2">박성현 | Danny</h1>
+      <h1 className="text-xl font-semibold mt-2 py-2">Danny Park | 박성현</h1>
       <p className="text-gray-400 mt-1">
         꾸준한 지식과 성장을 기록하는 공간입니다.
       </p>

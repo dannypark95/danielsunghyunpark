@@ -28,9 +28,7 @@ const AdminPost: React.FC = () => {
     setURL(newURL); // Set the URL state
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmit = async (isDraft: boolean) => {
     let processedTagIds = [];
 
     for (const tag of tags) {
@@ -57,7 +55,7 @@ const AdminPost: React.FC = () => {
         content,
         tags: processedTagIds,
         project: project?.value,
-        status: "live",
+        active: true,
         slug: url,
       };
       const response = await api.postBlogPost(postData); // Implement postBlogPost in your API module
@@ -69,10 +67,18 @@ const AdminPost: React.FC = () => {
     }
   };
 
+  const saveAsDraft = () => {
+    handleSubmit(true);
+  };
+
+  const postBlog = () => {
+    handleSubmit(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#15171A] text-[#15171A] px-4">
       <div className="w-full max-w-4xl mx-auto p-6 space-y-6 bg-white rounded shadow">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form className="space-y-6">
           <TitleInput
             initialTitle={title}
             onTitleChange={setTitle}
@@ -93,12 +99,14 @@ const AdminPost: React.FC = () => {
 
             {/* TODO: Implement draft and post submission logic */}
             <button
+              onClick={saveAsDraft}
               type="button"
               className="px-6 py-2 text-sm text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
             >
               Save as Draft
             </button>
             <button
+              onClick={postBlog}
               type="submit"
               className="px-6 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
             >

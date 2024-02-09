@@ -70,12 +70,28 @@ export const generateSlugFromTitle = async (title) => {
   }
 };
 
+// Update post's active status
+export const togglePostActiveStatus = async (postId, isActive) => {
+  try {
+    const response = await axiosInstance.patch(`/posts/${postId}/`, {
+      active: isActive,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error toggling post active status with ID ${postId}:`,
+      error
+    );
+    throw error;
+  }
+};
+
 export const postBlogPost = async ({
   title,
   content,
   tags,
   project,
-  status,
+  active,
   slug,
 }) => {
   const payload = {
@@ -83,7 +99,7 @@ export const postBlogPost = async ({
     content,
     tags,
     project,
-    status,
+    active,
     slug,
   };
 
@@ -129,6 +145,7 @@ const api = {
   login,
   createTag,
   postBlogPost,
+  togglePostActiveStatus,
 };
 
 export default api;
