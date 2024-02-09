@@ -41,7 +41,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ setContent }) => {
         }
       }
     };
-  }, []);
+  });
 
   return <div ref={editorContainerRef} id="editorjs"></div>;
 };

@@ -110,7 +110,10 @@ export const login = async (username, password) => {
       username,
       password,
     });
-    return response; // You might want to directly return response.data if more appropriate
+    const token = response.data.token;
+    localStorage.setItem("authToken", token);
+    axiosInstance.defaults.headers.common["Authorization"] = `Token ${token}`;
+    return response;
   } catch (error) {
     console.error("Error during login:", error);
     throw error; // Re-throw the error to be handled by the calling component

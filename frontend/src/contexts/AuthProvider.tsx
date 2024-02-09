@@ -6,10 +6,20 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    const token = localStorage.getItem("authToken");
+    return !!token; // Convert token presence to a boolean
+  });
 
-  const login = () => setIsAuthenticated(true);
-  const logout = () => setIsAuthenticated(false);
+  const login = (token: string) => {
+    localStorage.setItem("authToken", token); // Save token to localStorage on login
+    setIsAuthenticated(true);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("authToken"); // Clear token from storage on logout
+    setIsAuthenticated(false);
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>

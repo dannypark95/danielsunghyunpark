@@ -1,8 +1,10 @@
+// AuthContext.tsx
+
 import { createContext } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: () => void;
+  login: (token: string) => void;
   logout: () => void;
 }
 

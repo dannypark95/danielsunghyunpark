@@ -11,10 +11,13 @@ const AdminLogin: React.FC = () => {
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("trying to login");
     try {
       const response = await api.login(username, password); // Use the login function from api
+      console.log(response.status);
       if (response.status === 200) {
-        login(); // Update isAuthenticated state, assuming login updates relevant auth context or state
+        console.log("login success!");
+        login(response.data.token); // Update isAuthenticated state, assuming login updates relevant auth context or state
         navigate("/admin/dashboard"); // Redirect to the dashboard
       }
     } catch (error) {
